@@ -58,7 +58,11 @@ class User {
     }
     public static function getAll(){
         $allUsers = Application::$app->db->query("select * from users")->getAll();
-        return $allUsers;
+        $users=[];
+        foreach($allUsers as $user){
+            $users[] = new self($user['email'],$user['password'],$user['username'],$user['id'],$user['role'],$user['isactive']);
+        }
+        return $users;
     }
     public static function validateLogin($email,$password) {
         $errors = [];
@@ -104,6 +108,19 @@ class User {
         } else {
             return true;
         }
+    }
+
+    public static function suspendedCount() {
+        $count = Application::$app->db->query("select count(*) from users where isactive = false")->getOne()['count'];
+        return $count;
+    }
+    public static function getSuspendedPaginated($limit,$offset){ 
+        $usersAssoc = Application::$app->db->query("select * from users where isactive = false limit ? offset ?",[$limit,$offset])->getAll();
+        $users=[];
+        foreach($usersAssoc as $user){
+            $users[] = new self($user['email'],$user['password'],$user['username'],$user['id'],$user['role'],$user['isactive']);
+        }
+        return $users;
     }
     
     public static function findByEmail($email) {

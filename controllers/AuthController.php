@@ -10,12 +10,21 @@ use app\models\User;
 
 class AuthController extends Controller
 {
-    public function login()
+
+    public function login($request)
     {
+        if($request->getRole() !== 'visitor'){
+            header('Location: /');
+            exit;
+        }
         return $this->render("login");
     }
-    public function register()
+    public function register($request)
     {
+        if($request->getRole() !== 'visitor'){
+            header('Location: /');
+            exit;
+        }
         return $this->render("register");
     }
 
@@ -32,8 +41,14 @@ class AuthController extends Controller
                             'id' => $user->getId(),
                             'email' => $user->getEmail(),
                             'username' => $user->getusername(),
+                            'role' => $user->getRole(),
+                            'isactive' => $user->getIsactive()
                         ];
-                        header('Location: /');
+                        if($user->getRole() === 'admin')
+                        header('Location: /admin/dashboard');
+                        else if($user->getRole() === 'teacher')
+                        header('Location: /teacher/profile');
+                        else header('Location: /student/profile');
                         exit();
                 } else
                     $_SESSION['error'] = "Invalid password";

@@ -7,9 +7,13 @@ use app\core\Application;
 class TeachingRequest {
     private $id;
     private $user_id;
-    public function __construct($user_id,$id=null) {
+    private $username;
+    private $email;
+    public function __construct($user_id,$id=null, $username=null, $email=null) {
         $this->setId($id);
         $this->setUserId($user_id);
+        $this->setUsername($username);
+        $this->setEmail($email);
     }   
     public function getId() {
         return $this->id;
@@ -19,6 +23,18 @@ class TeachingRequest {
     }
     public function getUserId() {
         return $this->user_id;
+    }
+    public function getUsername() {
+        return $this->username;
+    }
+    public function getEmail() {
+        return $this->email;
+    }
+    public function setUsername($username) {
+        $this->username = $username;
+    }
+    public function setEmail($email) {
+        $this->email = $email;
     }
     public function setUserId($user_id) {
         $this->user_id = $user_id;
@@ -39,5 +55,17 @@ class TeachingRequest {
             $this->delete();
             return true;
         }
+    }
+    public static function getPaginated($limit,$offset){
+        $requestsAssoc = Application::$app->db->query("select u.id user_id, u.username username,u.email email ,tr.id  id from users u join teaching_requests tr on u.id = tr.user_id limit ? offset ?",[$limit,$offset])->getAll();
+        $requests=[];
+        foreach($requestsAssoc as $request){
+            $requests[] = new self($request['user_id'],$request['id'],$request['username'],$request['email']);
+        }
+        return $requests;
+    }
+    public static function count(){
+        $count = Application::$app->db->query("select count(*) from teaching_requests")->getOne()['count'];
+        return $count;
     }
 }
