@@ -71,16 +71,20 @@ class Database{
                 title VARCHAR(255) NOT NULL,
                 description TEXT NOT NULL,
                 content TEXT NOT NULL,
+                content_type text check(content_type in ('document','video')) NOT NULL DEFAULT 'text',
+                thumbnail text NOT NULL DEFAULT 'https://embed-ssl.wistia.com/deliveries/5cd59211cdc35bba92c2560fefd00527.webp?image_crop_resized=960x540',
                 teacher_id UUID NOT NULL REFERENCES users(id),
-                category_name VARCHAR(255) NOT NULL REFERENCES categories(name)
+                category_name VARCHAR(255) NOT NULL REFERENCES categories(name) on update cascade,
+                vector tsvector generated always as (setweight(to_tsvector('english',coalesce(title)),'A') || setweight(to_tsvector('english',coalesce(description)),'B')) stored
             )
         ");
-    
+
+        $this->pdo->exec("CREATE INDEX IF NOT EXISTS course_vector_index on courses using gin (vector);");
         // Course_Tags Table
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS course_tags (
                 course_id UUID NOT NULL REFERENCES courses(id),
-                tag_name VARCHAR(255) NOT NULL REFERENCES tags(name),
+                tag_name VARCHAR(255) NOT NULL REFERENCES tags(name) on update cascade,
                 PRIMARY KEY (course_id, tag_name)
             )
         ");
