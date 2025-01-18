@@ -48,7 +48,7 @@
                         </a>
                         <ul class="flex gap-2">
                         <?php foreach(range(1, $pagesNum) as $n): ?>
-                            <a href="/admin/students?page=<?=$n?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?=$currPage == $n ? 'bg-gray-200':''?>"><?=$n?></a>
+                            <a href="/admin/students?page=<?=$n?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?=$currPage == $n ? 'bg-gray-300':''?>"><?=$n?></a>
                         <?php endforeach?>
                         </ul>
                         <a href="/admin/students?page=<?=$currPage+1 > $pagesNum ? $pagesNum : $currPage+1?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
