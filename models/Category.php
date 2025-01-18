@@ -22,8 +22,16 @@ class Category {
         Application::$app->db->query("INSERT INTO categories (name) VALUES (?)", [$this->name]);
         return true;
     }
-    public function getAll(){
+    public static function getAll(){
         $categoriesAssoc = Application::$app->db->query("select * from categories")->getAll();
+        $categories = [];
+        foreach ($categoriesAssoc as $category) {
+            $categories[] = new self($category["name"]);
+        }
+        return $categories;
+    }
+    public static function getUsedCategories(){
+        $categoriesAssoc = Application::$app->db->query("select distinct c.* from categories c join courses cr on c.name = cr.category_name")->getAll();
         $categories = [];
         foreach ($categoriesAssoc as $category) {
             $categories[] = new self($category["name"]);

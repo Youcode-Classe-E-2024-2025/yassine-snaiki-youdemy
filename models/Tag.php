@@ -18,7 +18,7 @@ class Tag {
     public function setName($name) {
         $this->name = $name;
     }
-    public function getAll() {
+    public static function getAll() {
         $tagsAssoc = Application::$app->db->query("select * from tags")->getAll();
         $tags = [];
         foreach ($tagsAssoc as $tag) {

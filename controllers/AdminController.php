@@ -3,7 +3,9 @@
 namespace app\controllers;
 use app\core\Controller;
 use app\core\Request;
+use app\models\Category;
 use app\models\Student;
+use app\models\Tag;
 use app\models\Teacher;
 use app\models\TeachingRequest;
 use app\models\User;
@@ -28,8 +30,9 @@ class AdminController extends Controller
     public function teachers($request) {
         $page = isset($request->getBody()['page']) ? (int)$request->getBody()['page'] :1;
         $limit = 10;
-        $offset = ($page -1) * $limit;
         $pagesNum = ceil(Teacher::count() / $limit);
+        $page = ($page >$pagesNum) ? $pagesNum : (($page < 1) ? 1 : $page);
+        $offset = ($page -1) * $limit;
         return $this->render('admin-teachers',[
             'teachers' => Teacher::getPaginated($limit,$offset),
             'pagesNum' => $pagesNum,
@@ -39,8 +42,9 @@ class AdminController extends Controller
     public function students($request) {
         $page = isset($request->getBody()['page']) ? (int)$request->getBody()['page'] :1;
         $limit = 10;
-        $offset = ($page -1) * $limit;
         $pagesNum = ceil(Student::count() / $limit);
+        $page = ($page >$pagesNum) ? $pagesNum : (($page < 1) ? 1 : $page);
+        $offset = ($page -1) * $limit;
         return $this->render('admin-students',[
             'students' => Student::getPaginated($limit,$offset),
             'pagesNum' => $pagesNum,
@@ -68,6 +72,12 @@ class AdminController extends Controller
             'requests' => TeachingRequest::getPaginated($limit,$offset),
             'pagesNum' => $pagesNum,
             'currPage' => $page,
+        ]);
+    }
+    public function categories($request){
+        return $this->render('admin-categories',[
+            'categories' => Category::getAll(),
+            'tags' => Tag::getAll(),
         ]);
     }
     // public function acceptRequest($request) {
