@@ -4,15 +4,15 @@
     <div class="min-h-screen flex">
   
 
-        <!-- Main Content -->
+
         <div id="main-content" class="flex-1 transition-all duration-300 ease-in-out ">
-            <!-- Top Navigation -->
+          
             <header class="bg-white shadow">
                 <div class="flex justify-between items-center px-20 py-4">
                     <div class="flex items-center">
-                        <h2 class="text-xl font-semibold text-gray-800">Youdemy</h2>
+                        <a href="/" class="text-2xl font-bold text-gray-800"><span class=" text-blue-500">You</span>demy</a>
                     </div>
-                    <!-- Search Section -->
+                    
 <div class="bg-white ml-auto">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
@@ -42,7 +42,7 @@
                 </div>
             </header>
 
-            <!-- Page Content -->
+           
             <main class="p-6">
                 {{content}}
             </main>
