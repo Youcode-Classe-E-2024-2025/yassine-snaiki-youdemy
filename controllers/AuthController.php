@@ -36,7 +36,8 @@ class AuthController extends Controller
         if ($res === true) {
             $user = User::findByEmail($email);
             if ($user) {
-                if ($user->checkPassword($password)) {
+
+                if ($user->checkPassword($password) && $user->getIsactive() == true) {
                         $_SESSION['user'] = [
                             'id' => $user->getId(),
                             'email' => $user->getEmail(),
@@ -44,13 +45,16 @@ class AuthController extends Controller
                             'role' => $user->getRole(),
                             'isactive' => $user->getIsactive()
                         ];
+                    
                         if($user->getRole() === 'admin')
                         header('Location: /admin/dashboard');
                         else if($user->getRole() === 'teacher')
-                        header('Location: /teacher/profile');
-                        else header('Location: /student/profile');
+                        header('Location: /');
+                        else header('Location: /');
                         exit();
-                } else
+                } else if ($user->getIsactive() == false) {
+                    $_SESSION['error'] = 'account is suspended';
+                }else
                     $_SESSION['error'] = "Invalid password";
             } else
                 $_SESSION['error'] = "User not found";
@@ -64,9 +68,8 @@ class AuthController extends Controller
     public function logout()
     {
         session_unset();
-
         session_destroy();
-        header('Location: /login');
+        header('Location: /');
         exit;
     }
 
@@ -83,7 +86,7 @@ class AuthController extends Controller
             $user = new User($email,$password,$username);
             if ($user->save()){
                 if($role==='teacher'){
-                    $teachingRequest = new TeachingRequest($user->getId());
+                    $teachingRequest = new TeachingRequest(null,$user->getId());
                     $teachingRequest->save();
                 }
                 header('Location: /login');

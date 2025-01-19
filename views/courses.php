@@ -13,7 +13,7 @@
 
     <!-- Categories Section -->
     <div class="mb-8">
-        <div class="flex flex-wrap gap-4">
+        <div class="flex flex-wrap justify-center gap-4 bg-gray-50 py-10 rounded-md">
             <?php foreach ($categories as $category): ?>
                 <a href="/courses?category=<?= $category->getName() ?>" 
                    class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-full text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-500 transition-colors">
@@ -62,7 +62,7 @@
                             </p>
                         </div>
                         <div class="mt-6 flex justify-end">
-                            <a href="/course/<?= $course->getId() ?>" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <a href="/course?id=<?=$course->getId()?>" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 View Course
                             </a>
                         </div>

@@ -52,5 +52,27 @@ class CoursesController extends Controller
             'currPage' => $page,
         ]);
     }
+
+    public function course($request) {
+        if(!isset($request->getBody()['id'])) {
+            header('Location: /courses');
+            exit;
+        }
+        $course = Course::getById($request->getBody()['id']);
+        if(!$course) {
+            http_response_code(404);
+            return $this->render('404');
+        }
+        if(isset($_SESSION['user']['id']))
+        return $this->render('course',[
+            'course' => $course,
+            'isEnrolled' => $course->isEnrolled($_SESSION['user']['id']),
+        ]);
+        return $this->render('course',[
+            'course' => $course,
+            'isEnrolled' => false,
+        ]);
+
+    }
     
 }

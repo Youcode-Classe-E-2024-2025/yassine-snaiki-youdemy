@@ -12,9 +12,7 @@
                     <div class="flex-1">
                         <h2 class="text-lg font-medium text-gray-900">All Teachers</h2>
                     </div>
-                    <div class="ml-4">
-                        <input type="text" placeholder="Search teachers..." class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
+             
                 </div>
             </div>
 
@@ -29,12 +27,13 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                Details
-                            </button>
+                         
+                            <form action="/suspend" method="POST">
+                            <input type="hidden" class="hidden" name="user_id" value="<?= $teacher->getId() ?>">
                             <button class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                 Suspend
                             </button>
+                            </form>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -48,7 +47,7 @@
                         </a>
                         <ul class="flex gap-2">
                         <?php foreach(range(1, $pagesNum) as $n): ?>
-                            <a href="/admin/teachers?page=<?=$n?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?=$currPage==$n ? 'bg-gray-300' : ''?>"><?=$n?></a>
+                            <a href="/admin/teachers?page=<?=$n?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 <?=$currPage==$n ? 'bg-gray-200' : 'bg-white'?>"><?=$n?></a>
                         <?php endforeach?>
                         </ul>
                         <a href="/admin/teachers?page=<?=$currPage+1 > $pagesNum ? $pagesNum : $currPage+1?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">

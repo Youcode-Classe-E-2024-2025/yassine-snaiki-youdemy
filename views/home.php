@@ -46,9 +46,9 @@
         </div>
 
         <div class="mt-10">
-            <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="flex flex-wrap justify-center gap-5 ">
                 <?php foreach ($categories as $category): ?>
-                <div class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-between">
+                <div class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-5">
                     <div>
                         <span class="rounded-lg inline-flex p-3 bg-indigo-50 text-indigo-700 ring-4 ring-white">
                             <!-- Heroicon name: outline/academic-cap -->
@@ -136,7 +136,7 @@
                             </p>
                         </div>
                         <div class="mt-6 flex justify-end">
-                            <a href="/course/<?= $course->getId() ?>" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <a href="/course?id=<?= $course->getId() ?>" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 View Course
                             </a>
                         </div>
