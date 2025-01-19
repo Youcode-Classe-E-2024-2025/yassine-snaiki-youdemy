@@ -1,7 +1,4 @@
-<?php
-/** @var array $categories */
-/** @var array $tags */
-?>
+
 
 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
@@ -13,11 +10,11 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Categories Section -->
+       
         <div>
-            <!-- Add Category Form -->
+         
             <div class="mb-6 bg-white rounded-lg shadow p-4">
-                <form class="space-y-4" method="POST" action="/admin/add-category">
+                <form class="space-y-4" method="POST" action="/add-category">
                     <div>
                         <label for="category" class="block text-sm font-medium text-gray-700">New Category</label>
                         <input type="text" id="category" name="category" required
@@ -42,11 +39,14 @@
                         <div class="p-4 hover:bg-gray-50 transition-colors duration-200">
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-700"><?= htmlspecialchars($category->getName()) ?></span>
+                                <form action="/delete-category" method="POST">
+                                    <input type="hidden" name="category_name" value="<?= $category->getName() ?>" class="hidden">
                                 <button class="text-red-600 hover:text-red-800 p-1" data-category-id="<?= $category->getName() ?>">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                     </svg>
                                 </button>
+                                </form>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -83,11 +83,15 @@
                         <?php foreach ($tags as $tag): ?>
                             <div class="inline-flex items-center bg-gray-100 rounded-full px-3 py-1">
                                 <span class="text-sm text-gray-700"><?= htmlspecialchars($tag->getName()) ?></span>
+                                <form action="/delete-tag" method="POST">
+                                  
+                                <input type="hidden" name="tag_name" value="<?= $tag->getName() ?>">
                                 <button class="ml-2 text-gray-500 hover:text-red-600" data-tag-id="<?= $tag->getName() ?>">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                     </svg>
                                 </button>
+                                </form>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -116,7 +120,11 @@ var tagify = new Tagify(tagsInput,{
 document.getElementById('addTagsBtn').addEventListener('click', function() {
     const tags = tagify.value.map(tag => tag.value);
     
-    fetch('/admin/add-tags', {
+    if (tags.length === 0) {
+        return;
+    }
+
+    fetch('/add-tags', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -125,16 +133,15 @@ document.getElementById('addTagsBtn').addEventListener('click', function() {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.success) {
-            // Refresh the page to show new tags
+        if (data.status === 'success') {
             window.location.reload();
         } else {
-            alert('Error adding tags: ' + data.message);
+            alert('Error adding tags: ' + (data.message || 'Unknown error'));
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Error adding tags');
+        alert('Error adding tags. Please try again.');
     });
 });
 </script>
