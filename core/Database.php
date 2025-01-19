@@ -21,6 +21,9 @@ class Database{
         }
         $this->createTables();
     }
+    public function getPdo(){
+        return $this->pdo;
+    }
     private function createDatabase($config) {
         $dsn = "pgsql:host={$config['host']};port={$config['port']}";
         $pdo = new \PDO($dsn, $config['user'], $config['password']);
@@ -80,25 +83,24 @@ class Database{
         ");
 
         $this->pdo->exec("CREATE INDEX IF NOT EXISTS course_vector_index on courses using gin (vector);");
-        // Course_Tags Table
+
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS course_tags (
-                course_id UUID NOT NULL REFERENCES courses(id),
-                tag_name VARCHAR(255) NOT NULL REFERENCES tags(name) on update cascade,
+                course_id UUID NOT NULL REFERENCES courses(id) on delete cascade,
+                tag_name VARCHAR(255) NOT NULL REFERENCES tags(name) on delete cascade,
                 PRIMARY KEY (course_id, tag_name)
             )
         ");
     
-        // Enrollments Table
+        
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS enrollments (
-                student_id UUID NOT NULL REFERENCES users(id),
-                course_id UUID NOT NULL REFERENCES courses(id),
+                student_id UUID NOT NULL REFERENCES users(id) on delete cascade,
+                course_id UUID NOT NULL REFERENCES courses(id) on delete cascade,
                 PRIMARY KEY (student_id, course_id)
             )
         ");
-    
-        // Notifications Table
+   
         $this->pdo->exec("
             CREATE TABLE IF NOT EXISTS notifications (
                 id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -108,7 +110,6 @@ class Database{
             )
         ");
     
-        // Insert admin user if none exists
         $count = $this->query("SELECT COUNT(*) FROM users")->getOne()['count'];
         if ($count === 0) {
             $hashedPassword = password_hash('admin', PASSWORD_DEFAULT);
@@ -120,7 +121,12 @@ class Database{
     }
     public function query($query,$params=[]) {
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute($params);
+        try {
+            $stmt->execute($params);
+        } catch (\PDOException $e) {
+            header('Location: /404');
+            exit;
+        }
         $this->stmt = $stmt;
         return $this;
     }

@@ -7,13 +7,9 @@ use app\core\Application;
 class TeachingRequest {
     private $id;
     private $user_id;
-    private $username;
-    private $email;
-    public function __construct($user_id,$id=null, $username=null, $email=null) {
+    public function __construct($id=null,$user_id) {
         $this->setId($id);
         $this->setUserId($user_id);
-        $this->setUsername($username);
-        $this->setEmail($email);
     }   
     public function getId() {
         return $this->id;
@@ -25,16 +21,12 @@ class TeachingRequest {
         return $this->user_id;
     }
     public function getUsername() {
-        return $this->username;
+        $username = Application::$app->db->query("select username from users where id = ?", [$this->user_id])->getOne();
+        return $username["username"];
     }
     public function getEmail() {
-        return $this->email;
-    }
-    public function setUsername($username) {
-        $this->username = $username;
-    }
-    public function setEmail($email) {
-        $this->email = $email;
+        $email = Application::$app->db->query("select email from users where id = ?", [$this->user_id])->getOne();
+        return $email['email'];
     }
     public function setUserId($user_id) {
         $this->user_id = $user_id;
@@ -48,7 +40,8 @@ class TeachingRequest {
         return true;
     }
     public function accept(){
-        $user = User::findByEmail($this->user_id);
+        $user = User::findById($this->user_id);
+    
         if ($user) {
             $user->setRole('teacher');
             $user->update();
@@ -57,12 +50,18 @@ class TeachingRequest {
         }
     }
     public static function getPaginated($limit,$offset){
-        $requestsAssoc = Application::$app->db->query("select u.id user_id, u.username username,u.email email ,tr.id  id from users u join teaching_requests tr on u.id = tr.user_id limit ? offset ?",[$limit,$offset])->getAll();
+        $requestsAssoc = Application::$app->db->query("select * from teaching_requests limit ? offset ?",[$limit,$offset])->getAll();
         $requests=[];
         foreach($requestsAssoc as $request){
-            $requests[] = new self($request['user_id'],$request['id'],$request['username'],$request['email']);
+            $requests[] = new self($request['id'],$request['user_id']);
         }
         return $requests;
+    }
+    public static function findById($id) {
+        $reqAssoc = Application::$app->db->query('select * from teaching_requests where id= ?',[$id])->getOne();
+        if($reqAssoc){
+            return new self($reqAssoc['id'],$reqAssoc['user_id']);
+        } return false;
     }
     public static function count(){
         $count = Application::$app->db->query("select count(*) from teaching_requests")->getOne()['count'];

@@ -13,12 +13,12 @@ class User {
     private $isactive = true;
 
     public function __construct($email,$password,$username,$id=null,$role='student',$isactive=true) {
-        $this->setId($id ?? null);
-        $this->setUsername($username ?? null);
-        $this->setEmail($email ?? null);
-        $this->setPassword($password ?? null);
-        $this->setRole($role ?? null);
-        $this->setIsactive($isactive ?? false);
+        $this->setId($id);
+        $this->setUsername($username);
+        $this->setEmail($email);
+        $this->setPassword($password);
+        $this->setRole($role);
+        $this->setIsactive($isactive);
     }
     public function getId(){
         return $this->id;
@@ -85,6 +85,13 @@ class User {
     }
     public static function validateRegister($email,$password,$confirm_password,$username) {
         $errors = [];
+        $emailTaken = Application::$app->db->query("select * from users where email = ?",[$email])->getOne();
+        $usernameTaken = Application::$app->db->query("select * from users where username = ?",[$username])->getOne();
+        if($emailTaken){
+            $errors['email_error'] = "Email is already taken.";
+        }elseif($usernameTaken){   
+            $errors['username_error'] = "Username is already taken.";
+        }
         if (empty($email)) {
             $errors['email_error'] = "Email is required.";
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -131,6 +138,16 @@ class User {
             return new self($user["email"], $user["password"], $user["username"],$user['id'], $user["role"], $user["isactive"]);
         }
     }
+    public static function findById($id) {
+
+        $user = Application::$app->db->query("SELECT id,email,password,username,role,isactive FROM users WHERE id = ?",[$id])->getOne();
+
+        if (empty($user)) {
+            return false;
+        }else {
+            return new self($user["email"], $user["password"], $user["username"],$user['id'], $user["role"], $user["isactive"]);
+        }
+    }
     public function checkPassword($password) {
         return password_verify($password,$this->password);
     }
@@ -141,7 +158,7 @@ class User {
         return true;
     }
     public function update() {
-        Application::$app->db->query("UPDATE users SET username = ? , email = ?, password = ?, role = ?, isactive = ? WHERE id = ?",[$this->username,$this->email,$this->password,$this->role,$this->isactive,$this->id]);
+        Application::$app->db->query("UPDATE users SET username = ? , email = ?, password = ?, role = ?, isactive = ? WHERE id = ?",[$this->username,$this->email,$this->password,$this->role,$this->isactive ? 1 : 0,$this->id]);
         return true;
     }
     public function delete(){
