@@ -1,7 +1,7 @@
 <?php require_once __DIR__."/header.php";?>
 <body class="bg-gray-100">
     <div class="min-h-screen flex">
-        <!-- Sidebar -->
+    
         <div id="sidebar" class="bg-blue-800 text-white w-64 py-6 flex flex-col fixed h-full transition-transform duration-300 ease-in-out z-20">
             <div class="px-6 mb-8 flex justify-between items-center">
                 <h1 class="text-2xl font-bold">Youdemy Student</h1>
@@ -19,7 +19,7 @@
                     </svg>
                     Courses
                 </a>
-                <a href="/mycourses" class="block px-6 py-3 hover:bg-blue-700 <?= strpos($_SERVER['REQUEST_URI'], '/student/courses') !== false ? 'bg-blue-700' : '' ?>">
+                <a href="/mycourses" class="block px-6 py-3 hover:bg-blue-700 <?= strpos($_SERVER['REQUEST_URI'], '/mycourses') !== false ? 'bg-blue-700' : '' ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mr-3">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                     </svg>
@@ -37,9 +37,9 @@
             </div>
         </div>
 
-        <!-- Main Content -->
+       
         <div id="main-content" class="flex-1 transition-all duration-300 ease-in-out ml-64">
-            <!-- Top Navigation -->
+
             <header class="bg-white shadow">
                 <div class="flex justify-between items-center px-6 py-4">
                     <div class="flex items-center">
@@ -52,7 +52,7 @@
                     </div>
                     
                     <div class="flex items-center space-x-4">
-                    <!-- Search Section -->
+      
                     <div class="bg-white ml-auto">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
@@ -70,7 +70,7 @@
         </div>
     </div>
 </div>
-                        <!-- Notifications -->
+                       
                         <button class="relative p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-600 rounded-full">
                             <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -81,7 +81,6 @@
                 </div>
             </header>
 
-            <!-- Page Content -->
             <main class="p-6">
                 {{content}}
             </main>

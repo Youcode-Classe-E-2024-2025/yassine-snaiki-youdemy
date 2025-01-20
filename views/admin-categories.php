@@ -54,9 +54,9 @@
             </div>
         </div>
 
-        <!-- Tags Section -->
+
         <div>
-            <!-- Add Tags Form -->
+         
             <div class="mb-6 bg-white rounded-lg shadow p-4">
                 <div class="space-y-4">
                     <div>
@@ -73,7 +73,7 @@
                 </div>
             </div>
 
-            <!-- Tags List -->
+
             <div class="bg-white rounded-lg shadow">
                 <div class="p-4 border-b border-gray-200 bg-gray-50">
                     <h2 class="text-lg font-medium text-gray-900">Tags</h2>
@@ -102,7 +102,7 @@
 </div>
 
 <script>
-// Initialize Tagify on the tags input
+
 var tagsInput = document.querySelector('input[name=tags]');
 var tagify = new Tagify(tagsInput,{
         pattern: /^[a-z0-9]{3,10}$/,
@@ -116,7 +116,7 @@ var tagify = new Tagify(tagsInput,{
         }
 });
 
-// Handle tag submission
+
 document.getElementById('addTagsBtn').addEventListener('click', function() {
     const tags = tagify.value.map(tag => tag.value);
     

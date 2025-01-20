@@ -1,10 +1,3 @@
-<?php
-/** @var array $categories */
-/** @var array $featuredCourses */
-
-?>
-
-<!-- Hero Section -->
 <div class="relative bg-gradient-to-r from-blue-600 to-indigo-700 overflow-hidden">
     <div class="max-w-7xl mx-auto">
         <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
@@ -35,7 +28,7 @@
     </div>
 </div>
 
-<!-- Categories Section -->
+
 <div class="bg-gray-50 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="lg:text-center">
@@ -73,7 +66,6 @@
     </div>
 </div>
 
-<!-- Search Section -->
 <div class="bg-white py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto">
@@ -92,7 +84,7 @@
     </div>
 </div>
 
-<!-- Featured Courses Section -->
+
 <div class="bg-gray-50 py-12" id="courses">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="lg:text-center mb-12">
@@ -152,7 +144,7 @@
     </div>
 </div>
 
-<!-- Call to Action -->
+
 <div class="bg-indigo-700">
     <div class="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-extrabold text-white sm:text-4xl">

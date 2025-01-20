@@ -6,7 +6,7 @@
 
     <div class="bg-white rounded-lg shadow">
         <div class="flex flex-col">
-            <!-- Header -->
+
             <div class="bg-gray-50 p-4 border-b border-gray-200">
                 <div class="flex justify-between items-center">
                     <div class="flex-1">

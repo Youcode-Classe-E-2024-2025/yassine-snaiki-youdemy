@@ -1,9 +1,4 @@
-<?php
-/** @var array $courses */
-/** @var array $categories */
-/** @var int $pagesNum */
-/** @var int $currPage */
-?>
+
 
 <div class="p-6">
     <div class="mb-6">
@@ -11,7 +6,7 @@
         <p class="text-gray-600">Explore our wide range of courses</p>
     </div>
 
-    <!-- Categories Section -->
+
     <div class="mb-8">
         <div class="flex flex-wrap justify-center gap-4 bg-gray-50 py-10 rounded-md">
             <?php foreach ($categories as $category): ?>
@@ -27,7 +22,6 @@
         </div>
     </div>
 
-    <!-- Course Grid -->
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <?php if (!empty($courses)) : ?>
             <?php foreach ($courses as $course): ?>
@@ -76,7 +70,7 @@
         <?php endif; ?>
     </div>
 
-    <!-- Pagination -->
+    
     <div class="mt-6 bg-white px-4 py-3 border border-gray-200 rounded-lg sm:px-6">
         <div class="flex items-center justify-between">
             <div class="flex-1 flex justify-between">

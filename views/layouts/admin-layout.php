@@ -1,7 +1,7 @@
 <?php require_once __DIR__."/header.php";?>
 <body class="bg-gray-100">
     <div class="min-h-screen flex">
-        <!-- Sidebar -->
+       
         <div id="sidebar" class="bg-gray-800 text-white w-64 py-6 flex flex-col fixed h-full transition-transform duration-400 ease-in-out z-20">
             <div class="px-6 mb-8 flex justify-between items-center">
                 <h1 class="text-2xl font-bold">Youdemy Admin</h1>
@@ -56,9 +56,9 @@
             </div>
         </div>
 
-        <!-- Main Content -->
+
         <div id="main-content" class="flex-1 transition-all duration-400 ease-in-out ml-64">
-            <!-- Top Navigation -->
+
             <header class="bg-white shadow">
                 <div class="flex justify-between items-center px-6 py-4">
                     <div class="flex items-center">
@@ -73,7 +73,7 @@
                 </div>
             </header>
 
-            <!-- Page Content -->
+    
             <main class="p-6">
                 {{content}}
             </main>

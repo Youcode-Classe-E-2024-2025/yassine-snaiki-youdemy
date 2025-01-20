@@ -32,13 +32,13 @@
     </div>
 </div>
 
-<!-- Course Content -->
+
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="w-full">
         <div class="sticky top-4">
             <div class="bg-white shadow-lg rounded-lg overflow-hidden">
                 <div class="p-6">
-                    <!-- Instructor Info -->
+                   
                     <div class="flex items-center space-x-4 mb-6">
                         <img class="h-12 w-12 rounded-full"
                             src="https://ui-avatars.com/api/?name=<?= urlencode($course->getUsername()) ?>&background=random"
@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    <!-- Course Info -->
+  
                     <div class="space-y-4 mb-6">
                         <h4 class="text-sm font-medium text-gray-500">Title</h4>
                         <form action="/change-title" method="POST" class="flex gap-2 ">
@@ -137,9 +137,10 @@
     </div>
 </div>
 
+
 <script>
-    var input = document.querySelector('#tags');
-    var tagify = new Tagify(input, {
+     let input = document.querySelector('#tags');
+    let tagify = new Tagify(input, {
         whitelist: <?= json_encode(array_map(function ($tag) {
             return $tag->getName(); }, $tags)) ?>,
         dropdown: {
