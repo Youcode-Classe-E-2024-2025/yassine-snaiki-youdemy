@@ -50,6 +50,7 @@ $app->router->post('/enroll',[StudentController::class,'enroll']);
 $app->router->get('/teacher/courses',[TeacherController::class,'courses']);
 $app->router->get('/teacher/create',[TeacherController::class,'create']);
 $app->router->get('/teacher/modify',[TeacherController::class,'modify']);
+$app->router->get('/teacher/dashboard',[TeacherController::class,'dashboard']);
 $app->router->post('/create-course',[TeacherController::class,'createCourse']);
 $app->router->post('/add-tags-to-course',[TeacherController::class,'addTags']);
 $app->router->post('/remove-tag-from-course',[TeacherController::class,'removeTag']);

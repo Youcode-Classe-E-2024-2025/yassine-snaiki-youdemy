@@ -142,6 +142,11 @@ class Course {
         $count = Application::$app->db->query("select count(*) from courses where vector @@ plainto_tsquery('english',?)",[$sh])->getOne()['count'];
         return $count;
     }
+
+    public function enrollmentsCount(){
+        $count = Application::$app->db->query('select count(*) from enrollments where course_id = ?',[$this->id])->getOne()['count'];
+        return $count;
+    }
     public static function getById($id){
         $course = Application::$app->db->query('select * from courses  where id = ?',[$id])->getOne();
         if($course)

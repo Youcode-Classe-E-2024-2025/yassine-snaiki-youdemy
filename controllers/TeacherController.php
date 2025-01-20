@@ -21,6 +21,19 @@ class TeacherController extends Controller
         }
     }
 
+    public function dashboard($request){
+        $user = User::findById( $_SESSION['user']['id'] );
+        $teacher = new Teacher($user->getId(),$user->getEmail(),$user->getPassword(),$user->getusername());
+        $courses = $teacher->getCourses();
+        $courseNum = count($courses);
+        $enrollPerCourse = [];
+
+        return $this->render('teacher-dashboard',[
+            'course' => $courses,
+            'courseNum'=> $courseNum
+        ]);
+    }
+
     public function courses(){
         $id = $_SESSION['user']['id'];
         $user = User::findById( $id );
@@ -44,12 +57,16 @@ class TeacherController extends Controller
             header('Location: /');
             exit;
         }
-
+        if(empty($request->getBody()['title']) || empty($request->getBody()['description']) || empty($request->getBody()['content_type']) || empty($request->getBody()['category_name'])){
+            $_SESSION['message'] = 'Please fill all fields';
+            header('Location: /teacher/create');
+            exit;
+        }  
         $body = $request->getBody();
         $content = $body['content'];
         $thumbnail = 'https://embed-ssl.wistia.com/deliveries/5cd59211cdc35bba92c2560fefd00527.webp?image_crop_resized=960x540';
         
-   
+
         if (!empty($_FILES['thumbnail']['name'])) {
             $upload_dir = "uploads/";
             if (!file_exists($upload_dir)) {

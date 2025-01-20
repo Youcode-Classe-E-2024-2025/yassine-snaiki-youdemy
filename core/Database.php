@@ -101,14 +101,7 @@ class Database{
             )
         ");
    
-        $this->pdo->exec("
-            CREATE TABLE IF NOT EXISTS notifications (
-                id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-                user_id UUID NOT NULL REFERENCES users(id),
-                message TEXT NOT NULL,
-                is_read BOOLEAN NOT NULL DEFAULT FALSE
-            )
-        ");
+       
     
         $count = $this->query("SELECT COUNT(*) FROM users")->getOne()['count'];
         if ($count === 0) {
