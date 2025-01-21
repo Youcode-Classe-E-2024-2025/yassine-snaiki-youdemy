@@ -3,8 +3,9 @@
 namespace app\models;
 
 use app\core\Application;
+use app\interfaces\Loggable;
 
-class Teacher extends User {
+class Teacher extends User implements Loggable {
     public function __construct($id = null, $email, $password, $username, $isactive = true) {
         parent::__construct($email, $password, $username, $id, 'teacher', $isactive);
     }
@@ -40,9 +41,7 @@ class Teacher extends User {
         return $course;
     }
 
-    public function manageCourse($course_id, $action) {
-        
-    }
+
     public static function top3(){
         $teachersAssoc = Application::$app->db->query("
         with course_enrollments as (

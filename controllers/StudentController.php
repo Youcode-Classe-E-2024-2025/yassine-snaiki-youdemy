@@ -50,7 +50,7 @@ class StudentController extends Controller
         }
         $studentId = $_SESSION['user']['id'];
         $student = Student::findById($studentId);
-        $courses = $student->getEnrolledCourses();
+        $courses = $student->getCourses();
         return $this->render('mycourses',[
             'courses' => $courses,
         ]);

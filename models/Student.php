@@ -3,8 +3,9 @@
 namespace app\models;
 
 use app\core\Application;
+use app\interfaces\Loggable;
 
-class Student extends User {
+class Student extends User implements Loggable {
     public function __construct($id = null, $email, $password, $username, $isactive = true) {
         parent::__construct($id, $email, $password, $username, 'student', $isactive);
     }
@@ -30,7 +31,7 @@ class Student extends User {
         return $count;
     }
     
-    public function getEnrolledCourses() {
+    public function getCourses() {
         $coursesAssoc = Application::$app->db->query("SELECT c.* FROM courses c JOIN enrollments e ON c.id = e.course_id WHERE e.student_id = ?", [$this->getId()])->getAll();
         $courses=[];
         foreach($coursesAssoc as $course){
@@ -46,6 +47,7 @@ class Student extends User {
             return new self($user["email"], $user["password"], $user["username"],$user['id'], $user["role"], $user["isactive"]);
         }
     }
+
     public function enroll($course_id) {
         Application::$app->db->query("INSERT INTO enrollments (student_id, course_id) VALUES (?, ?)", [$this->getId(), $course_id]);
         return true;
