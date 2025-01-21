@@ -19,53 +19,24 @@
                     </span>
                 </div>
             <?php endif; ?>
-            <form class="mt-8 space-y-6" action="/login" method="POST">
-                <input type="hidden" name="action" value="login">
+            <form id="loginForm" class="mt-8 space-y-6" action="/login" method="POST">
+                <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
                 <div class="rounded-md shadow-sm space-y-4">
+                    <div id="email-error" class="text-red-600"></div>
                     <div>
                         <label for="email" class="sr-only">Email address</label>
                         <input id="email" name="email" type="email" required 
                             class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                             placeholder="Email address">
-                            <?php if(isset($_SESSION['email_error'])): ?>
-                              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                               <span class="block sm:inline">
-                                 <?php 
-                                  echo $_SESSION['email_error'];
-                                  unset($_SESSION['email_error']);
-                                 ?>
-                               </span>
-                             </div>
-                            <?php endif; ?>
                     </div>
+                    <div id="password-error" class="text-red-600"></div>
                     <div>
                         <label for="password" class="sr-only">Password</label>
                         <input id="password" name="password" type="password" required 
                             class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                             placeholder="Password">
-                            <?php if(isset($_SESSION['password_error'])): ?>
-                              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                               <span class="block sm:inline">
-                                 <?php 
-                                  echo $_SESSION['password_error'];
-                                  unset($_SESSION['password_error']);
-                                 ?>
-                               </span>
-                             </div>
-                            <?php endif; ?>
                     </div>
                 </div>
-
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input id="remember" name="remember" type="checkbox" 
-                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                        <label for="remember" class="ml-2 block text-sm text-gray-900">
-                            Remember me
-                        </label>
-                    </div>
-                </div>
-
                 <div>
                     <button type="submit" 
                         class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
@@ -83,3 +54,5 @@
             </div>
         </div>
     </div>
+    <script src="/js/login.js"></script>
+  

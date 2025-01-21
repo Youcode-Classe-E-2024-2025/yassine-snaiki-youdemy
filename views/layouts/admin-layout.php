@@ -67,7 +67,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
-                        <h2 class="text-xl font-semibold text-gray-800">Dashboard</h2>
+                        <h2 class="text-xl font-semibold text-gray-800">Youdemy</h2>
                     </div>
             
                 </div>

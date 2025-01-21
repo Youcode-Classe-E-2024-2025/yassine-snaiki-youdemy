@@ -17,7 +17,11 @@ class AuthController extends Controller
             header('Location: /');
             exit;
         }
-        return $this->render("login");
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        
+        return $this->render("login",[
+            'csrfToken' => $_SESSION['csrf_token']
+        ]);
     }
     public function register($request)
     {
@@ -25,11 +29,24 @@ class AuthController extends Controller
             header('Location: /');
             exit;
         }
-        return $this->render("register");
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        return $this->render("register",[
+            'csrfToken' => $_SESSION['csrf_token']
+        ]);
     }
 
+    
     public function handleLogin(Request $request)
     {
+        if(!isset($request->getBody()['email']) || !isset($request->getBody()['password']) || !isset($request->getBody()['csrf_token'])){
+            header('Location: /login');
+            exit;
+        }
+        $csrf_token = $request->getBody()["csrf_token"];
+        if($csrf_token !== $_SESSION['csrf_token']){
+            header('Location: /404');
+            exit;
+        }
         $email = $request->getBody()["email"];
         $password = $request->getBody()["password"];
         $res = User::validateLogin($email,$password);
@@ -73,8 +90,17 @@ class AuthController extends Controller
         exit;
     }
 
-    public function handleRegister(Request $request)
+    public function handleRegister($request)
     {
+        if(!isset($request->getBody()['email']) || !isset($request->getBody()['password']) || !isset($request->getBody()['confirm_password']) || !isset($request->getBody()['username']) || !isset($request->getBody()['role'])|| !isset($request->getBody()['csrf_token'])){
+            header('Location: /register');
+            exit;
+        }
+        $csrf_token = $request->getBody()["csrf_token"];
+        if($csrf_token !== $_SESSION['csrf_token']){
+            header('Location: /404');
+            exit;
+        }
         $password = $request->getBody()['password'];
         $email = $request->getBody()['email'];
         $confirm_password = $request->getBody()['confirm_password'];

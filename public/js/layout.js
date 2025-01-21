@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
     </svg>`;
 
-    toggleButton.addEventListener('click', function() {
+    toggleButton?.addEventListener('click', function() {
         isSidebarOpen = !isSidebarOpen;
         if (isSidebarOpen) {            
             sidebar.style.transform = 'translateX(0)';

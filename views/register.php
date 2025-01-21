@@ -1,4 +1,3 @@
-
 <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
             <div>
@@ -19,80 +18,45 @@
                     </span>
                 </div>
             <?php endif; ?>
-            <form class="mt-8 space-y-6" action="" method="POST">
-                <input type="hidden" name="action" value="register">
+            <form id="registerForm" class="mt-8 space-y-6" action="" method="POST">
+                <input type="hidden" name="csrf_token" value="<?= $csrfToken  ?>">
                 <div class="rounded-md shadow-sm space-y-4">
-                        <div>
-                            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                            <input id="username" name="username" type="text" required 
-                                class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
-                                placeholder="John">
-                            <?php if(isset($_SESSION['username_error'])): ?>
-                              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                               <span class="block sm:inline">
-                                 <?php 
-                                  echo $_SESSION['username_error'];
-                                  unset($_SESSION['username_error']);
-                                 ?>
-                               </span>
-                             </div>
-                            <?php endif; ?>
-                        </div>
-                        <div>
-                            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-                            <select id="role" name="role" type="text" required 
-                                class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" >
-                                <option value="student">student</option>
-                                <option value="teacher">teacher</option>
-                            </select>    
-                        </div>
+                    <div id="username-error" class="text-red-600"></div>
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                        <input id="username" name="username" type="text" required 
+                            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
+                            placeholder="John">
+                    </div>
+                    <div id="role-error" class="text-red-600"></div>
+                    <div>
+                        <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+                        <select id="role" name="role" type="text" required 
+                            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" >
+                            <option value="student">student</option>
+                            <option value="teacher">teacher</option>
+                        </select>    
+                    </div>
+                    <div id="email-error" class="text-red-600"></div>
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
                         <input id="email" name="email" type="email" required 
                             class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                             placeholder="john@example.com">
-                            <?php if(isset($_SESSION['email_error'])): ?>
-                              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                               <span class="block sm:inline">
-                                 <?php 
-                                  echo $_SESSION['email_error'];
-                                  unset($_SESSION['email_error']);
-                                 ?>
-                               </span>
-                             </div>
-                            <?php endif; ?>
                     </div>
+                    <div id="password-error" class="text-red-600"></div>
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <input id="password" name="password" type="password" required 
                             class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                             placeholder="••••••••">
-                            <?php if(isset($_SESSION['password_error'])): ?>
-                              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                               <span class="block sm:inline">
-                                 <?php 
-                                  echo $_SESSION['password_error'];
-                                  unset($_SESSION['password_error']);
-                                 ?>
-                               </span>
-                             </div>
-                            <?php endif; ?>
                     </div>
+                    <div id="confirm-error" class="text-red-600"></div>
                     <div>
                         <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
                         <input id="confirm_password" name="confirm_password" type="password" required 
                             class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" 
                             placeholder="••••••••">
-                            <?php if(isset($_SESSION['confirm_error'])): ?>
-                              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                               <span class="block sm:inline">
-                                 <?php 
-                                  echo $_SESSION['confirm_error'];
-                                  unset($_SESSION['confirm_error']);
-                                 ?>
-                               </span>
-                             </div>
-                            <?php endif; ?>
                     </div>
                 </div>
 
@@ -113,3 +77,4 @@
             </div>
         </div>
     </div>
+    <script src="/js/register.js"></script>

@@ -11,6 +11,7 @@ class User {
     private  $password = '';
     private $role = 'student';
     private $isactive = true;
+    
 
     public function __construct($email,$password,$username,$id=null,$role='student',$isactive=true) {
         $this->setId($id);
@@ -89,8 +90,10 @@ class User {
         $usernameTaken = Application::$app->db->query("select * from users where username = ?",[$username])->getOne();
         if($emailTaken){
             $errors['email_error'] = "Email is already taken.";
+            $_SESSION['error'] = "Email is already taken.";
         }elseif($usernameTaken){   
             $errors['username_error'] = "Username is already taken.";
+            $_SESSION['error'] = "Email is already taken.";
         }
         if (empty($email)) {
             $errors['email_error'] = "Email is required.";
