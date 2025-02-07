@@ -80,7 +80,7 @@ cd youdemy
   ```
 
 3. **Environment Configuration**
-- Update the following variables:
+- Update the following variables in config file:
   ```
   DB_CONNECTION=pgsql
   DB_HOST=localhost
@@ -105,6 +105,13 @@ The database is automatically created with the following structure:
 - `enrollments` - Student course enrollments
 - `course_tags` - Many-to-many relationship between courses and tags
 - `course_content` - Store course content with proper relationships
+
+## Default Admin Account
+When the database is first created, a default admin account is automatically generated with the following credentials:
+- **Email**: admin@gmail.com
+- **Password**: admin
+- **Role**: Administrator (Full system access)
+
 
 ## 🔒 Security Features
 

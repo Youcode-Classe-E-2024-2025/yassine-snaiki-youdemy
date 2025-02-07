@@ -2,7 +2,7 @@
 
 return [
     'host' => 'localhost',
-    'port' => '8885',
+    'port' => '5432',
     'dbname' => 'youdemydb',
     'user' => 'postgres',
     'password' => '0000'
